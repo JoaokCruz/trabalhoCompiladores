@@ -40,6 +40,14 @@ espaco = \t|\f|" "|\r|\n
 "em"			{return new Symbol(Tokens.EM, yytext());}
 "("			{return new Symbol(Tokens.APAR, yytext());}
 ")"			{return new Symbol(Tokens.FPAR, yytext());}
+"se"			{return new Symbol(Tokens.SE, yytext());}
+"entao"			{return new Symbol(Tokens.ENTAO, yytext());}
+"senao"			{return new Symbol(Tokens.SENAO, yytext());}
+"maior"			{return new Symbol(Tokens.MAIOR, yytext());}
+"menor"			{return new Symbol(Tokens.MENOR, yytext());}
+"igual"			{return new Symbol(Tokens.IGUAL, yytext());}
+"que"			{return new Symbol(Tokens.QUE, yytext());}
+"a"			{return new Symbol(Tokens.A, yytext());}
 {id}		{return new Symbol(Tokens.ID, yytext());}
 {digito}+	{return new Symbol(Tokens.NUMERO, new Integer(yytext()));}
 {espaco}	{}
