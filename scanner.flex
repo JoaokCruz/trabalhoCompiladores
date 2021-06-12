@@ -48,6 +48,13 @@ espaco = \t|\f|" "|\r|\n
 "igual"			{return new Symbol(Tokens.IGUAL, yytext());}
 "que"			{return new Symbol(Tokens.QUE, yytext());}
 "a"			{return new Symbol(Tokens.A, yytext());}
+"para"			{return new Symbol(Tokens.ENTAO, yytext());}
+"em"			{return new Symbol(Tokens.ENTAO, yytext());}
+"["			{return new Symbol(Tokens.ACOL, yytext());}
+"]"			{return new Symbol(Tokens.FCOL, yytext());}
+","			{return new Symbol(Tokens.VIRGULA, yytext());}
+"faca"			{return new Symbol(Tokens.FACA, yytext());}
+"enquanto"			{return new Symbol(Tokens.ENQUANTO, yytext());}
 {id}		{return new Symbol(Tokens.ID, yytext());}
 {digito}+	{return new Symbol(Tokens.NUMERO, new Integer(yytext()));}
 {espaco}	{}
