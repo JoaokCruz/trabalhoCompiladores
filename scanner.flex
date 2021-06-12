@@ -30,13 +30,16 @@ espaco = \t|\f|" "|\r|\n
 
 %%
 
-";"			{return new Symbol(Tokens.SEMI, yytext());}
-"="			{return new Symbol(Tokens.ATRIB, yytext());}
-"-"			{return new Symbol(Tokens.MENOS, yytext());}
-"+"			{return new Symbol(Tokens.MAIS, yytext());}
-"*"			{return new Symbol(Tokens.VEZES, yytext());}
-"("			{return new Symbol(Tokens.LPAREN, yytext());}
-")"			{return new Symbol(Tokens.RPAREN, yytext());}
+"mais"			{return new Symbol(Tokens.MAIS, yytext());}
+"menos"			{return new Symbol(Tokens.MENOS, yytext());}
+"vezes"			{return new Symbol(Tokens.VEZES, yytext());}
+"dividido por"			{return new Symbol(Tokens.DIV, yytext());}
+"ao quadrado"			{return new Symbol(Tokens.QUADRADO, yytext());}
+"raiz quadrada de"			{return new Symbol(Tokens.RAIZ, yytext());}
+"guardar"			{return new Symbol(Tokens.GUARDAR, yytext());}
+"em"			{return new Symbol(Tokens.EM, yytext());}
+"("			{return new Symbol(Tokens.APAR, yytext());}
+")"			{return new Symbol(Tokens.FPAR, yytext());}
 {id}		{return new Symbol(Tokens.ID, yytext());}
 {digito}+	{return new Symbol(Tokens.NUMERO, new Integer(yytext()));}
 {espaco}	{}
