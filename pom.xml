@@ -38,28 +38,22 @@
             </snapshots>
         </repository>
     </repositories>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>de.jflex</groupId>
-                <artifactId>jflex-maven-plugin</artifactId>
-                <version>1.8.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    
+  
     <dependencies>
         <dependency>
-        <groupId>edu.princeton.cup</groupId>
-        <artifactId>java-cup</artifactId>
-        <version>10k</version>
+            <groupId>jflex</groupId>
+            <artifactId>jflex</artifactId>
+            <version>1.8.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/jflex-full-1.8.2.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>java-cup</groupId>
+            <artifactId>java-cup</artifactId>
+            <version>11b</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/java-cup-11b.jar</systemPath>
         </dependency>
     </dependencies>
 
