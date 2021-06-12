@@ -1,3 +1,4 @@
-x = 2;
-y = (x + 6) * 8;
-y+1;
+guardar 10 em x
+se 5 maior que 2 entao guardar 5 em x senao guardar 2 em x
+guardar 4 mais (2 ao quadrado) em z
+para x em [1,2,3,4] faca guarde y mais x em y
