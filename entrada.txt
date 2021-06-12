@@ -1,3 +1,1 @@
-x = 2;
-y = (x + 6) * 8;
-y+1;
+para x em [1,2,3,4] faca guarde y mais x em y
