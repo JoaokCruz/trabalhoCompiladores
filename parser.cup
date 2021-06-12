@@ -15,7 +15,7 @@ init with {:  :};
 scan with {: return s.next_token(); :};
 
 /* Terminais (tokens retornados pelo scanner). */
-terminal            SEMI, MAIS, MENOS, VEZES, MENOSUNIT, LPAREN, RPAREN, ID, ATRIB;
+terminal            SEMI, MAIS, MENOS, VEZES, DIV, QUADRADO, RAIZ, GUARDAR, EM, APAR, FPAR, SE , ENTAO, SENAO, MAIOR, MENOR, IGUAL, QUE, A, PARA, ACOL, FCOL, VIRGULA, FACA, ENQUANTO, ID;
 terminal Integer    NUMERO;        
 
 /* Não terminais */
@@ -24,7 +24,7 @@ non terminal Integer    exp;      // utilizado para armazenar as subexpressões 
 
 /* Precedência de operadores */
 precedence left MAIS, MENOS;
-precedence left VEZES;
+precedence left VEZES, DIV, QUADRADO, RAIZ;
 
 /* Regras da Gramática 
 S ->  S E ;
@@ -33,6 +33,7 @@ S ->  S E ;
 E ->  E + E
     | E - E
     | E * E
+    | E / E
     | - E
     | ( E )
     | n
@@ -46,9 +47,15 @@ inicio ::=   inicio exp:e SEMI       {: System.out.println(e);         :}
 exp ::=   exp:e1 MAIS  exp:e2        {: RESULT = e1+e2;                :}
         | exp:e1 MENOS exp:e2        {: RESULT = e1-e2;                :}
         | exp:e1 VEZES exp:e2        {: RESULT = e1*e2;                :}
+        | exp:e1 QUADRADO            {: RESULT = e1*e1;                :}
+        | exp:e1 DIV exp:e2          {: RESULT = e1/e2;                :}
+        | RAIZ exp:e1                {: RESULT = java.lang.Math.sqrt(e1);  :}
+        | GUARDAR exp:e              {: simbolos.put(e);                   :}
         | MENOS exp:e                {: RESULT = -e;                   :}
+        | MAIS exp:e                 {: RESULT = +e;                   :}
         | LPAREN exp:e RPAREN	     {: RESULT = e;                    :}
+        | ACOL exp:e FCOL	         {: RESULT = e;                    :}
         | NUMERO:n                   {: RESULT = n;                    :}
         | ID:i	                     {: RESULT = simbolos.get(i);      :}
-        | ID:i ATRIB exp:e           {: simbolos.put(i.toString(), e);  :}
+        | GUARDAR exp:e EM ID:i      {: simbolos.put(i.toString(), e);  :}
 ;
