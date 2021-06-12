@@ -40,10 +40,27 @@ E ->  E + E
     | i
     | i = E
 */
-inicio ::=   inicio exp:e SEMI       {: System.out.println(e);         :}
-           | exp:e SEMI              {: System.out.println(e);         :}
+inicio ::=   inicio exp:e       {: System.out.println(e);         :}
+           | exp:e              {: System.out.println(e);         :}
 ;
+exp ::=  expDec
 
+expDec ::= SE expLog:e1 ENTAO exp:e2 expDec2:e3
+
+expDec2 ::= SENAO SE expLog:e1 ENTAO exp:e2 expDec2
+        | SENAO ENTAO exp:e1
+
+expLog ::=  expMat:e1 MAIOR QUE expMat:e2  {: RESULT = e1 > e2  }
+            | expMat:e1 MENOR QUE expMat:e2 {: RESULT = e1 < e2 }
+            | expMat:e1 MAIOR IGUAL A expMat:e2 {: RESULT = e1 >= e2 }
+            | expMat:e1 MENOR IGUAL A expMat:e2 {: RESULT = e1 >= e2 }
+            | expMat:e1 IGUAL A  expMat:e2 {: RESULT = e1 == e2 }
+
+expLoop ::= PARA ID:i EM ACOL expArray:e1 FCOL FACA exp:e2 {: RESULT = for( Integer simbolos.get(i) : Arrays.asList( e1 ) ) { e2 } }
+            | ENQUANTO expLog:e1 FACA exp:e2 {: RESULT = while( e1 ) { e2 } }
+
+expArray ::= NUMERO,expArray:e  {: RESULT = e1+e2;                :}
+          | NUMERO
 exp ::=   exp:e1 MAIS  exp:e2        {: RESULT = e1+e2;                :}
         | exp:e1 MENOS exp:e2        {: RESULT = e1-e2;                :}
         | exp:e1 VEZES exp:e2        {: RESULT = e1*e2;                :}
@@ -54,8 +71,17 @@ exp ::=   exp:e1 MAIS  exp:e2        {: RESULT = e1+e2;                :}
         | MENOS exp:e                {: RESULT = -e;                   :}
         | MAIS exp:e                 {: RESULT = +e;                   :}
         | LPAREN exp:e RPAREN	     {: RESULT = e;                    :}
-        | ACOL exp:e FCOL	         {: RESULT = e;                    :}
         | NUMERO:n                   {: RESULT = n;                    :}
         | ID:i	                     {: RESULT = simbolos.get(i);      :}
         | GUARDAR exp:e EM ID:i      {: simbolos.put(i.toString(), e);  :}
+
+expMat ::= expMat:e1 MAIS  expMat:e2        {: RESULT = e1+e2;                :}
+           | expMat:e1 MENOS expMat:e2        {: RESULT = e1-e2;                :}
+           | expMat:e1 VEZES expMat:e2        {: RESULT = e1*e2;                :}
+           | expMat:e1 QUADRADO            {: RESULT = e1*e1;                :}
+           | expMat:e1 DIV expMat:e2          {: RESULT = e1/e2;                :}
+           | RAIZ expMat:e1                {: RESULT = java.lang.Math.sqrt(e1);  :}
+            | ACOL expMat:e FCOL	         {: RESULT = e;                    :}
+            | NUMERO:n                   {: RESULT = n;                    :}
+            | ID:i	                     {: RESULT = simbolos.get(i);      :}
 ;

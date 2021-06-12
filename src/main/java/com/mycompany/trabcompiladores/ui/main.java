@@ -5,6 +5,8 @@
  */
 package com.mycompany.trabcompiladores.ui;
 
+import java.util.Arrays;
+
 /**
  *
  * @author jvcru
