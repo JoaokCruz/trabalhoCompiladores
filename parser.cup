@@ -20,8 +20,9 @@ terminal            EOL, MAIS, MENOS, VEZES, DIV, QUADRADO, RAIZ, GUARDAR, EM, A
 terminal Integer    NUMERO;
 
 /* Não terminais */
-non terminal            inicio, exp, expLog;
+non terminal            inicio, exp;
 non terminal Integer    expMat;      // utilizado para armazenar as subexpressões avaliadas
+non terminal Boolean expLog;
 //non terminal Boolean    expLog;
 //non terminal            inicio, exp;
 //non terminal Integer    expMat;      // utilizado para armazenar as subexpressões avaliadas
@@ -38,7 +39,8 @@ inicio ::=  inicio exp:e EOL        {: System.out.println(e);         :}
 
 exp ::= GUARDAR expMat:e EM ID:i      {: simbolos.put(i.toString(), e); RESULT = e; :}
     |   expLog:e                        {:RESULT = e;:}
-    | SE expLog:e1 ENTAO exp:e2 {: if( e1 ){ e2 }  :}
+//    | SE expLog:e1 ENTAO exp:e2 {: RESULT = e1 ? e2 : null; :}
+    | SE expLog:e1 ENTAO exp:e2 {: if( e1 ) { RESULT = e2; } :}
 ;
 
 expLog ::=  expMat:e1 MAIOR QUE expMat:e2  {: RESULT = e1 > e2;  :}
