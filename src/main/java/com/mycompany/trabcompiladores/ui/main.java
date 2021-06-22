@@ -5,7 +5,15 @@
  */
 package com.mycompany.trabcompiladores.ui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -29,36 +37,47 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fileChooser = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtButton = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        txtArea = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Importar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton1MousePressed(evt);
+            }
+        });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtButtonActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Importar Sintaxe ");
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
-        jTextArea2.getAccessibleContext().setAccessibleName("txtResult");
+        txtArea.setEditable(false);
+        txtArea.setColumns(20);
+        txtArea.setRows(5);
+        jScrollPane2.setViewportView(txtArea);
+        txtArea.getAccessibleContext().setAccessibleName("txtResult");
 
         jScrollPane1.setViewportView(jScrollPane2);
 
         jButton2.setText("Analisar");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton2MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,7 +87,7 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1))
                     .addComponent(jLabel1)
@@ -84,7 +103,7 @@ public class main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -93,7 +112,7 @@ public class main extends javax.swing.JFrame {
         );
 
         jButton1.getAccessibleContext().setAccessibleName("ImportarBtn");
-        jTextField1.getAccessibleContext().setAccessibleName("ImportadorTxt");
+        txtButton.getAccessibleContext().setAccessibleName("ImportadorTxt");
         jButton2.getAccessibleContext().setAccessibleName("analisarBtn");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,9 +129,105 @@ public class main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtButtonActionPerformed
+
+    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+        int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            // What to do with the file, e.g. display it in a TextArea
+            txtButton.setText(file.getName());
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file.getName()));
+                StringBuilder sb = new StringBuilder();
+                String line = br.readLine();
+
+                while (line != null) {
+                    sb.append(line);
+                    sb.append(System.lineSeparator());
+                    line = br.readLine();
+                }
+                String everything = sb.toString();
+                txtArea.setText("Sintexe:" + "\n");
+                txtArea.setText(txtArea.getText() + "------------------------------------------------------------" + "\n");
+                txtArea.setText(txtArea.getText() + everything);
+                txtArea.setText(txtArea.getText() + "------------------------------------------------------------" + "\n");
+                br.close();
+                jflexcup();
+                txtArea.setText(txtArea.getText() + "------------------------------------------------------------" + "\n");
+                txtArea.setText(txtArea.getText() + "Clique em analisar para começar o processamento..." + "\n");
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+    }//GEN-LAST:event_jButton1MousePressed
+
+    private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MousePressed
+    private void scanner(String filename) {
+//        try {
+//            Scanner scanner = new Scanner(new FileReader(filename));
+//            System.out.println("Análise Léxica: Lista de Tokens:");
+//            Symbol s;
+//
+//            s = scanner.next_token();
+//
+//            while (s.sym != Tokens.EOF) {
+//                System.out.printf("<%d, %s>\n", s.sym, s.value);
+//                s = scanner.next_token();
+//            }
+//            //criando o parser passando o scanner
+//            scanner = new Scanner(new FileReader(filename));
+//            Parser parser = new Parser(scanner);
+//            parser.parse();
+//        } catch (Exception ex) {
+//            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+    }
+
+    private void btnAnalisarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalisarMousePressed
+        //todo
+//        scanner(txtButton.getText());
+    }//GEN-LAST:event_btnAnalisarMousePressed
+
+    private void jflexcup() throws IOException {
+        Runtime r = Runtime.getRuntime();
+        Process p;
+        //posicionando na pasta src e chamar o flex por linha de comando
+        //vai gerar a classe Scanner.java
+        try {
+            txtArea.setText(txtArea.getText() + "Gerando classe java scanner..." + "\n");
+            p = r.exec(new String[]{"java", "-jar", "..\\jflex-full-1.8.2.jar", "..\\scanner.flex"}, null, new File("src\\"));
+            //se ok, a saída será 0*/
+            txtArea.setText(txtArea.getText() + "Resultado execução do scanner: " + p.waitFor() + "  (se ok, a saída será 0)" + "\n");
+            if (p.waitFor() != 0) {
+                System.out.println("Erro gerando classe Scanner.java");
+                System.exit(1);
+            }
+            //vai gerar as classes Parser.java e Tokens.java
+            txtArea.setText(txtArea.getText() + "Gerando classes java do Parser e Token..." + "\n");
+            p = r.exec(new String[]{"java", "-jar", "..\\java-cup-11b.jar", "-parser", "Parser", "-symbols", "Tokens", "..\\parser.cup"}, null, new File("src\\"));
+            //se ok, a saída será 0*/
+            txtArea.setText(txtArea.getText() + "Resultado execução do parser e tokens: " + p.waitFor() + "  (se ok, a saída será 0)" + "\n");
+
+            if (p.waitFor() != 0) {
+                System.out.println("Erro gerando classes parser.java e tokens.java");
+                System.exit(1);
+            }
+
+        } catch (InterruptedException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -150,13 +265,14 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser fileChooser;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea txtArea;
+    private javax.swing.JTextField txtButton;
     // End of variables declaration//GEN-END:variables
 }
