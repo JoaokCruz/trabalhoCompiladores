@@ -18,7 +18,6 @@ eofval: especifica um valor de retorno no final do arquivo
 %full
 %line
 %char
-%ignorecase
 %eofval{
 	return new Symbol(Tokens.EOF,new String("Fim do arquivo"));
 %eofval}
@@ -30,9 +29,9 @@ espaco = \t|\f|" "|\r|\n
 
 %%
 
-"ma1z"			{return new Symbol(Tokens.MAIS, yytext());}
-"menoz"			{return new Symbol(Tokens.MENOS, yytext());}
-"vezez"			{return new Symbol(Tokens.VEZES, yytext());}
+"mais"			{return new Symbol(Tokens.MAIS, yytext());}
+"menos"			{return new Symbol(Tokens.MENOS, yytext());}
+"vezes"			{return new Symbol(Tokens.VEZES, yytext());}
 //"d1v1d1do por"			{return new Symbol(Tokens.DIV, yytext());}
 "ao quadrado"			{return new Symbol(Tokens.QUADRADO, yytext());}
 //"ra1z quadrada de"			{return new Symbol(Tokens.RAIZ, yytext());}
@@ -40,10 +39,10 @@ espaco = \t|\f|" "|\r|\n
 "em"			{return new Symbol(Tokens.EM, yytext());}
 "("			{return new Symbol(Tokens.APAR, yytext());}
 ")"			{return new Symbol(Tokens.FPAR, yytext());}
-"ze"			{return new Symbol(Tokens.SE, yytext());}
+"se"			{return new Symbol(Tokens.SE, yytext());}
 "entao"			{return new Symbol(Tokens.ENTAO, yytext());}
-//"zenao"			{return new Symbol(Tokens.SENAO, yytext());}
-"ma1or"			{return new Symbol(Tokens.MAIOR, yytext());}
+//"senao"			{return new Symbol(Tokens.SENAO, yytext());}
+"maior"			{return new Symbol(Tokens.MAIOR, yytext());}
 "menor"			{return new Symbol(Tokens.MENOR, yytext());}
 "1gual"			{return new Symbol(Tokens.IGUAL, yytext());}
 "que"			{return new Symbol(Tokens.QUE, yytext());}
